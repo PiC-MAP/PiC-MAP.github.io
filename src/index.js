@@ -118,22 +118,38 @@ app.post("/taskform-submitted", function(req,res){
 
 
 
-// const { Client } = require('pg');
 
-// const client = new Client({
-//   connectionString: process.env.DATABASE_URL,
-//   ssl: true,
-// });
+ const { Client } = require('pg');
 
-// client.connect();
 
-// client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
-//   if (err) throw err;
-//   for (let row of res.rows) {
-//     console.log(JSON.stringify(row));
-//   }
-//   client.end();
-// });
+ const client = new Client({
+   connectionString: process.env.DATABASE_URL,
+   ssl: true,
+ });
+
+ client.connect();
+/*
+ client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
+   if (err) throw err;
+   for (let row of res.rows) {
+     console.log(JSON.stringify(row));
+   }
+   client.end();
+ });
+ */
+
+var connectionString = "postgres://*picmapmanager*:*MET-Agile3*@*Heroku*:*port*/*DATABASE_URL*"
+ 
+pg.connect(connectionString, function(err, client, done) {
+   client.query('CREATE TABLE Test(Test_ID NUMERIC PRIMARY KEY', function(err, result) {
+      console.log("Success");
+      done();
+      if(err) return console.error(err);
+      console.log(result.rows);
+   });
+});
+
+
 
 
 
